@@ -1,70 +1,111 @@
-import React from 'react';
+import {React,useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import Logo from '../assets/logo.png';
 import Profile from '../assets/profile.png'
 
 const Navbar = () => {
+
+  const [isOpen, setIsOpen] = useState(false); // State for the mobile menu
+  const navItems = ["Home", "Planner", "Kahitri", "Team"];
+
     return (
-        <nav className="bg-black_c text-white_c shadow-md fixed top-0 left-0 w-full z-50">
-            <div className="container mx-5 px-0 py-3 flex justify-between items-center">
-                <div className="text-xl font-bold">
-                    <NavLink to="/" className="hover:text-gray-300">
-                      <img src={Logo} className='w-30 h-20'/> 
-                    </NavLink>
-                </div>
-
-                {/* Navigation Links */}
-                <div className="flex space-x-6">
-                    <NavLink 
-                        to="/home" 
-                        className={({ isActive }) => 
-                            isActive 
-                              ? "text-white h-10 w-32 flex items-center justify-center" 
-                              : "hover:text-green_c text-xl h-10 w-28 flex items-center justify-center"}
-                    >
-                        Home
-                    </NavLink>
-                    <NavLink 
-                        to="/about" 
-                        className={ ({ isActive }) => 
-                            isActive 
-                              ? "text-white_c h-10 w-32 flex items-center justify-center" 
-                              : "hover:text-green_c text-xl h-10 w-28 flex items-center justify-center"}
-                    >
-                        About
-                    </NavLink>
-                    <NavLink 
-                        to="/services" 
-                        className={({ isActive }) => 
-                            isActive 
-                            ? "text-white_c h-10 w-32 flex items-center justify-center" 
-                            : "hover:text-green_c text-xl h-10 w-28 flex items-center justify-center"}
-                    >
-                        Services
-                    </NavLink>
-                    <NavLink 
-                        to="/contact" 
-                        className={({ isActive }) => 
-                            isActive 
-                            ? "text-white_c h-10 w-32 flex items-center justify-center" 
-                            : "hover:text-green_c text-xl h-10 w-28 flex items-center justify-center"}
-                    >
-                        Contact
-                    </NavLink>
-                </div>
-
-                {/* User Profile */}
-                <div className="flex items-center space-x-2 mr-0 px-0 py-3">
-                    {/*<span className="hidden sm:block">Hello, User</span> */}
-                    <div className="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center">
-                        <NavLink to="/profile" className="text-gray-300 hover:text-white">
-                            <i className="fas fa-user"></i>
-                            <img src={Profile} className='w-30 h-20'/> 
-                        </NavLink>
-                    </div>
-                </div>
+          <div className="relative flex items-center justify-between w-full px-6 py-4 bg-transparent text-white sticky top-0 z-50">
+            <img src={Logo} className='w-32'/>
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
             </div>
-        </nav>
+          </div>
+
+          {/* Hamburger Icon for Mobile */}
+          <button
+            className="bg-white text-black px-4 py-2 rounded sm:hidden"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle Menu"
+          >
+            <div
+              className={`w-6 h-1 bg-white rounded-md mb-1 transition-all duration-300 ${
+                isOpen ? "rotate-45 translate-y-2.5" : ""
+              }`}
+            ></div>
+            <div
+              className={`w-6 h-1 bg-white rounded-md mb-1 transition-all duration-300 ${
+                isOpen ? "opacity-0" : ""
+              }`}
+            ></div>
+            <div
+              className={`w-6 h-1 bg-white rounded-md transition-all duration-300 ${
+                isOpen ? "-rotate-45 -translate-y-2.5" : ""
+              }`}
+            ></div>
+          </button>
+
+          {/* Middle Nav Links (Desktop) */}
+          <div className="hidden sm:flex items-center space-x-6 bg-black bg-opacity-30 px-6 py-2 rounded-full shadow-md">
+            {navItems.map((item) => {
+              const path = `/${item.replace(/\s+/g, "-").toLowerCase()}`;
+              return (
+                <NavLink
+                  key={item}
+                  to={path}
+                  className={({ isActive }) =>
+                    `relative text-sm font-medium px-3 py-2 rounded-full transition-all duration-300 ${
+                      isActive
+                        ? "bg-gradient-to-r from-blue-700 to-purple-700 text-white shadow-lg"
+                        : "text-gray-400 hover:text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600"
+                    }`
+                  }
+                  aria-current={({ isActive }) => (isActive ? "page" : undefined)}
+                >
+                  {item}
+                </NavLink>
+              );
+            })}
+          </div>
+
+          {/* Right Button (Desktop) */}
+          <div className="hidden sm:block">
+            <NavLink
+              to="/launch"
+              className="px-4 sm:px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full shadow-md hover:opacity-90 transition-all duration-300"
+            >
+              Launch Webapp
+            </NavLink>
+          </div>
+
+          {/* Mobile Menu */}
+          {isOpen && (
+            <div className="absolute top-16 left-0 w-full bg-black bg-opacity-50 shadow-lg sm:hidden z-50">
+              <div className="flex flex-col items-center space-y-4 py-4">
+                {navItems.map((item) => {
+                  const path = `/${item.replace(/\s+/g, "-").toLowerCase()}`;
+                  return (
+                    <NavLink
+                      key={item}
+                      to={path}
+                      className={({ isActive }) =>
+                        `relative text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 ${
+                          isActive
+                            ? "bg-gradient-to-r from-blue-700 to-purple-700 text-white shadow-lg"
+                            : "text-gray-400 hover:text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600"
+                        }`
+                      }
+                      onClick={() => setIsOpen(false)} // Close menu on link click
+                    >
+                      {item}
+                    </NavLink>
+                  );
+                })}
+                <NavLink
+                  to="/launch"
+                  className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full shadow-md hover:opacity-90 transition-all duration-300"
+                  onClick={() => setIsOpen(false)} // Close menu on button click
+                >
+                  Launch Webapp
+                </NavLink>
+              </div>
+            </div>
+          )}
+        </div>
     );
 };
 
