@@ -12,8 +12,8 @@ const Navbar = () => {
           <div className="relative flex items-center justify-between w-full px-6 py-4 bg-transparent text-white sticky top-0 z-50">
             <img src={Logo} className='w-32'/>
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
-            </div>
+            {/* <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
+            </div> */}
           </div>
 
           {/* Hamburger Icon for Mobile */}
@@ -40,7 +40,7 @@ const Navbar = () => {
           </button>
 
           {/* Middle Nav Links (Desktop) */}
-          <div className="hidden sm:flex items-center space-x-6 bg-black bg-opacity-30 px-6 py-2 rounded-full shadow-md">
+          <div className="hidden sm:flex items-center space-x-6 bg-gradient-to-r bg-nav_purple2 text-white bg-opacity-100 shadow-lg px-6 py-2 rounded-2xl shadow-md mx-auto">
             {navItems.map((item) => {
               const path = `/${item.replace(/\s+/g, "-").toLowerCase()}`;
               return (
@@ -48,10 +48,10 @@ const Navbar = () => {
                   key={item}
                   to={path}
                   className={({ isActive }) =>
-                    `relative text-sm font-medium px-3 py-2 rounded-full transition-all duration-300 ${
+                    `relative text-base font-medium px-3 py-2 transition-all duration-300 ${
                       isActive
-                        ? "bg-gradient-to-r from-blue-700 to-purple-700 text-white shadow-lg"
-                        : "text-gray-400 hover:text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600"
+                        ? "text-white shadow-lg"
+                        : "text-gray-400 hover:text-white"
                     }`
                   }
                   aria-current={({ isActive }) => (isActive ? "page" : undefined)}
@@ -63,12 +63,12 @@ const Navbar = () => {
           </div>
 
           {/* Right Button (Desktop) */}
-          <div className="hidden sm:block">
+          <div className="hidden sm:block mr-5">
             <NavLink
               to="/launch"
-              className="px-4 sm:px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full shadow-md hover:opacity-90 transition-all duration-300"
+              className="px-4 sm:px-6 py-2  text-white font-semibold rounded-full shadow-md hover:opacity-90 transition-all duration-300"
             >
-              Launch Webapp
+              <img src={Profile} className='w-12'/>
             </NavLink>
           </div>
 

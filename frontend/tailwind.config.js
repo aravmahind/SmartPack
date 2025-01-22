@@ -11,6 +11,9 @@ export default {
   		},
   		colors: {
 			'dark_purple': '#0e0522',
+			'nav_purple1': '#1c0a43',
+			'nav_purple2': '#13072c',
+			'input_purple': '#bea6f2',
 			'green_c': '#76ABAE',
 			'white_c': '#EEEEEE',
   			background: 'hsl(var(--background))',
